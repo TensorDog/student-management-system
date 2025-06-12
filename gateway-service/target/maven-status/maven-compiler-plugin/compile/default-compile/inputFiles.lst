@@ -1,0 +1,3 @@
+/workspace/gateway-service/src/main/java/com/student/gateway/GatewayApplication.java
+/workspace/gateway-service/src/main/java/com/student/gateway/exception/GlobalExceptionHandler.java
+/workspace/gateway-service/src/main/java/com/student/gateway/filter/LoggingFilter.java

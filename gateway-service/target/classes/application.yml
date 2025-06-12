@@ -1,0 +1,75 @@
+server:
+  port: 8080
+  
+spring:
+  application:
+    name: gateway-service
+  
+  cloud:
+    gateway:
+      routes:
+        # 用户服务路由
+        - id: user-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/users/**
+          filters:
+            - StripPrefix=1
+            
+        # 班级服务路由  
+        - id: class-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/classes/**
+          filters:
+            - StripPrefix=1
+            
+        # 成绩服务路由
+        - id: score-service
+          uri: http://localhost:8083
+          predicates:
+            - Path=/api/scores/**
+          filters:
+            - StripPrefix=1
+      
+      # 全局过滤器配置
+      default-filters:
+        - name: GlobalFilter
+        - name: LoggingFilter
+      
+      # 全局 CORS 配置
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: 
+              - "http://localhost:*"
+              - "http://127.0.0.1:*"
+              - "http://192.168.*.*:*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - PATCH
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+            maxAge: 3600
+
+# 管理端点配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+  endpoint:
+    health:
+      show-details: always
+
+# 日志配置
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    com.student.gateway: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"

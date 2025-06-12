@@ -1,5 +1,5 @@
 com/student/user/controller/StudentController.class
 com/student/user/service/StudentService.class
 com/student/user/service/impl/StudentServiceImpl.class
-com/student/user/mapper/StudentMapper.class
 com/student/user/UserServiceApplication.class
+com/student/user/mapper/StudentMapper.class
