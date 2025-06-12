@@ -1,7 +1,7 @@
-/Users/fann/Build Application/Student Information Management System/common/src/main/java/com/student/common/dto/ClassDTO.java
-/Users/fann/Build Application/Student Information Management System/common/src/main/java/com/student/common/dto/StudentDTO.java
-/Users/fann/Build Application/Student Information Management System/common/src/main/java/com/student/common/entity/Score.java
-/Users/fann/Build Application/Student Information Management System/common/src/main/java/com/student/common/entity/Student.java
-/Users/fann/Build Application/Student Information Management System/common/src/main/java/com/student/common/entity/StudentClass.java
-/Users/fann/Build Application/Student Information Management System/common/src/main/java/com/student/common/result/Result.java
-/Users/fann/Build Application/Student Information Management System/common/src/main/java/com/student/common/utils/DateUtils.java
+/workspace/common/src/main/java/com/student/common/dto/ClassDTO.java
+/workspace/common/src/main/java/com/student/common/dto/StudentDTO.java
+/workspace/common/src/main/java/com/student/common/entity/Score.java
+/workspace/common/src/main/java/com/student/common/entity/Student.java
+/workspace/common/src/main/java/com/student/common/entity/StudentClass.java
+/workspace/common/src/main/java/com/student/common/result/Result.java
+/workspace/common/src/main/java/com/student/common/utils/DateUtils.java

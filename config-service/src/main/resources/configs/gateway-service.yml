@@ -1,0 +1,55 @@
+# Gateway Service 配置文件
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        namespace: student-management
+        group: DEFAULT_GROUP
+    gateway:
+      routes:
+        # User Service 路由
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/users/**
+          filters:
+            - StripPrefix=1
+        # Class Service 路由
+        - id: class-service
+          uri: lb://class-service
+          predicates:
+            - Path=/api/classes/**
+          filters:
+            - StripPrefix=1
+        # Score Service 路由
+        - id: score-service
+          uri: lb://score-service
+          predicates:
+            - Path=/api/scores/**
+          filters:
+            - StripPrefix=1
+      # 跨域配置
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+
+# 管理端点配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG

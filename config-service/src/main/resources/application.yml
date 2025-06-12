@@ -1,0 +1,56 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-service
+  profiles:
+    active: native
+  cloud:
+    # Nacos 配置中心
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        namespace: student-management
+        group: DEFAULT_GROUP
+      config:
+        server-addr: localhost:8848
+        file-extension: yml
+        namespace: student-management
+        group: DEFAULT_GROUP
+        refresh-enabled: true
+    # Spring Cloud Config Server 配置
+    config:
+      server:
+        native:
+          # 本地配置文件存储路径 (可修改为 Git 仓库)
+          search-locations: classpath:/configs/
+        git:
+          # Git 仓库配置 (如果使用 Git 作为配置源)
+          # uri: https://github.com/your-username/config-repo.git
+          # default-label: main
+          # search-paths: configs
+          # username: your-username
+          # password: your-password
+          skip-ssl-validation: true
+
+# 管理端点配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    refresh:
+      enabled: true
+
+# 日志配置
+logging:
+  level:
+    com.student.config: DEBUG
+    org.springframework.cloud.config: DEBUG
+    com.alibaba.nacos: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
