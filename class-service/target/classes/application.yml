@@ -1,0 +1,46 @@
+spring.config.import: "optional:nacos:"
+
+server:
+  port: 8082
+
+spring:
+  application:
+    name: class-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/student_management?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    password: Abcd1234
+  cloud:
+    nacos:
+      config:
+        import-check:
+          enabled: false
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.student.common.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    use-generated-keys: true
+    default-fetch-size: 100
+    default-statement-timeout: 30
+
+# 日志配置
+logging:
+  level:
+    com.student.classservice: DEBUG
+    com.student.common: DEBUG
+    org.springframework.cloud: DEBUG
+    org.mybatis: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always

@@ -1,0 +1,7 @@
+com/student/common/entity/StudentClass.class
+com/student/common/dto/StudentDTO.class
+com/student/common/utils/DateUtils.class
+com/student/common/dto/ClassDTO.class
+com/student/common/entity/Student.class
+com/student/common/result/Result.class
+com/student/common/entity/Score.class

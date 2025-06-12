@@ -1,0 +1,5 @@
+com/student/classservice/service/impl/ClassServiceImpl.class
+com/student/classservice/mapper/ClassMapper.class
+com/student/classservice/controller/ClassController.class
+com/student/classservice/service/ClassService.class
+com/student/classservice/ClassServiceApplication.class

@@ -1,0 +1,65 @@
+spring.config.import: "optional:nacos:"
+
+server:
+  port: 8081
+
+spring:
+  application:
+    name: user-service
+  # 数据源配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/student_management?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    password: Abcd1234
+  # Nacos 配置中心（已注释，避免冲突）
+  # cloud:
+  #   nacos:
+  #     discovery:
+  #       server-addr: localhost:8848
+  #       namespace: public
+  #       group: DEFAULT_GROUP
+  #     config:
+  #       server-addr: localhost:8848
+  #       namespace: public
+  #       group: DEFAULT_GROUP
+  #       file-extension: yaml
+  #       import-check:
+  #         enabled: false
+
+# MyBatis 配置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.student.user.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    use-generated-keys: true
+    default-fetch-size: 100
+    default-statement-timeout: 30
+
+# 日志配置
+logging:
+  level:
+    com.student.user: DEBUG
+    com.student.common: DEBUG
+    org.springframework.cloud: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+# 监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+
+# Feign 配置
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 5000
+        read-timeout: 10000 

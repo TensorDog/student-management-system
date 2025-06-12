@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.student.classservice.mapper.ClassMapper">
+
+    <!-- Result Map -->
+    <resultMap id="BaseResultMap" type="com.student.common.entity.StudentClass">
+        <id column="id" property="id"/>
+        <result column="class_name" property="className"/>
+        <result column="grade" property="grade"/>
+        <result column="capacity" property="capacity"/>
+        <result column="current_count" property="currentCount"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
+
+    <!-- Base Column List -->
+    <sql id="Base_Column_List">
+        id, class_name, grade, capacity, current_count, created_at, updated_at
+    </sql>
+
+    <!-- 插入班级 -->
+    <insert id="insert" parameterType="com.student.common.entity.StudentClass" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO student_class (class_name, grade, capacity, current_count, created_at, updated_at)
+        VALUES (#{className}, #{grade}, #{capacity}, #{currentCount}, NOW(), NOW())
+    </insert>
+
+    <!-- 更新班级信息 -->
+    <update id="update" parameterType="com.student.common.entity.StudentClass">
+        UPDATE student_class
+        SET class_name = #{className},
+            grade = #{grade},
+            capacity = #{capacity},
+            current_count = #{currentCount},
+            updated_at = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据ID删除班级 -->
+    <delete id="deleteById">
+        DELETE FROM student_class WHERE id = #{id}
+    </delete>
+
+    <!-- 根据ID查询班级 -->
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT id, class_name, grade, capacity, current_count, created_at, updated_at
+        FROM student_class
+        WHERE id = #{id}
+    </select>
+
+    <!-- 查询所有班级 -->
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT id, class_name, grade, capacity, current_count, created_at, updated_at
+        FROM student_class
+        ORDER BY created_at DESC
+    </select>
+
+    <!-- 根据年级查询班级 -->
+    <select id="selectByGrade" resultMap="BaseResultMap">
+        SELECT id, class_name, grade, capacity, current_count, created_at, updated_at
+        FROM student_class
+        WHERE grade = #{grade}
+        ORDER BY created_at DESC
+    </select>
+
+    <!-- 查询可用班级（当前人数小于容量） -->
+    <select id="selectAvailableClasses" resultMap="BaseResultMap">
+        SELECT id, class_name, grade, capacity, current_count, created_at, updated_at
+        FROM student_class
+        WHERE current_count &lt; capacity
+        ORDER BY created_at DESC
+    </select>
+
+</mapper> 
