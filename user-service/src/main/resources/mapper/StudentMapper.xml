@@ -7,58 +7,57 @@
     <!-- Result Map -->
     <resultMap id="StudentResultMap" type="com.student.common.entity.Student">
         <id column="id" property="id"/>
-        <result column="student_number" property="studentNumber"/>
         <result column="name" property="name"/>
+        <result column="student_number" property="studentNumber"/>
         <result column="gender" property="gender"/>
-        <result column="age" property="age"/>
-        <result column="class_id" property="classId"/>
+        <result column="birth_date" property="birthDate"/>
         <result column="phone" property="phone"/>
         <result column="email" property="email"/>
+        <result column="address" property="address"/>
+        <result column="class_id" property="classId"/>
         <result column="enrollment_date" property="enrollmentDate"/>
-        <result column="created_at" property="createdAt"/>
-        <result column="updated_at" property="updatedAt"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="remarks" property="remarks"/>
     </resultMap>
 
     <!-- Base Column List -->
     <sql id="Base_Column_List">
-        id, student_number, name, gender, age, class_id, phone, email, enrollment_date, created_at, updated_at
+        id, name, student_number, gender, birth_date, phone, email, address, class_id, enrollment_date, status, create_time, update_time, remarks
     </sql>
 
     <!-- 查询所有学生 -->
     <select id="findAll" resultMap="StudentResultMap">
         SELECT 
-            s.id, s.student_number, s.name, s.gender, s.age, s.class_id, s.phone, s.email, s.enrollment_date,
-            s.created_at, s.updated_at
-        FROM student s
-        ORDER BY s.id DESC
+            <include refid="Base_Column_List" />
+        FROM student
+        ORDER BY id DESC
     </select>
 
     <!-- 根据ID查询学生 -->
     <select id="findById" resultMap="StudentResultMap">
         SELECT 
-            s.id, s.student_number, s.name, s.gender, s.age, s.class_id, s.phone, s.email, s.enrollment_date,
-            s.created_at, s.updated_at
-        FROM student s
-        WHERE s.id = #{id}
+            <include refid="Base_Column_List" />
+        FROM student
+        WHERE id = #{id}
     </select>
 
     <!-- 根据学号查询学生 -->
     <select id="findByStudentNumber" resultMap="StudentResultMap">
         SELECT 
-            s.id, s.student_number, s.name, s.gender, s.age, s.class_id, s.phone, s.email, s.enrollment_date,
-            s.created_at, s.updated_at
-        FROM student s
-        WHERE s.student_number = #{studentNumber}
+            <include refid="Base_Column_List" />
+        FROM student
+        WHERE student_number = #{studentNumber}
     </select>
 
     <!-- 根据班级ID查询学生列表 -->
     <select id="findByClassId" resultMap="StudentResultMap">
         SELECT 
-            s.id, s.student_number, s.name, s.gender, s.age, s.class_id, s.phone, s.email, s.enrollment_date,
-            s.created_at, s.updated_at
-        FROM student s
-        WHERE s.class_id = #{classId}
-        ORDER BY s.student_number
+            <include refid="Base_Column_List" />
+        FROM student
+        WHERE class_id = #{classId}
+        ORDER BY student_number
     </select>
 
     <!-- 根据状态查询学生列表 -->
@@ -76,23 +75,26 @@
     <!-- 插入新学生 -->
     <insert id="insert" parameterType="com.student.common.entity.Student" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO student (
-            student_number, name, gender, age, class_id, phone, email, enrollment_date
+            name, student_number, gender, birth_date, phone, email, address, class_id, enrollment_date, status, remarks
         ) VALUES (
-            #{studentNumber}, #{name}, #{gender}, #{age}, #{classId}, #{phone}, #{email}, #{enrollmentDate}
+            #{name}, #{studentNumber}, #{gender}, #{birthDate}, #{phone}, #{email}, #{address}, #{classId}, #{enrollmentDate}, #{status}, #{remarks}
         )
     </insert>
 
     <!-- 更新学生信息 -->
     <update id="update" parameterType="com.student.common.entity.Student">
         UPDATE student SET
-            student_number = #{studentNumber},
             name = #{name},
+            student_number = #{studentNumber},
             gender = #{gender},
-            age = #{age},
-            class_id = #{classId},
+            birth_date = #{birthDate},
             phone = #{phone},
             email = #{email},
-            enrollment_date = #{enrollmentDate}
+            address = #{address},
+            class_id = #{classId},
+            enrollment_date = #{enrollmentDate},
+            status = #{status},
+            remarks = #{remarks}
         WHERE id = #{id}
     </update>
 
@@ -112,12 +114,11 @@
     <!-- 根据关键词搜索学生 -->
     <select id="searchByKeyword" resultMap="StudentResultMap">
         SELECT 
-            s.id, s.student_number, s.name, s.gender, s.age, s.class_id, s.phone, s.email, s.enrollment_date,
-            s.created_at, s.updated_at
-        FROM student s
-        WHERE s.name LIKE CONCAT('%', #{keyword}, '%') 
-           OR s.student_number LIKE CONCAT('%', #{keyword}, '%')
-        ORDER BY s.id DESC
+            <include refid="Base_Column_List" />
+        FROM student
+        WHERE name LIKE CONCAT('%', #{keyword}, '%') 
+           OR student_number LIKE CONCAT('%', #{keyword}, '%')
+        ORDER BY id DESC
     </select>
 
     <!-- 获取学生总数 -->
