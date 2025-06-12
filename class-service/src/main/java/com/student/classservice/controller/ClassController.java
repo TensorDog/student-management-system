@@ -36,7 +36,7 @@ public class ClassController {
     }
 
     @GetMapping("/{id}")
-    public Result<StudentClass> getClassById(@PathVariable Long id) {
+    public Result<StudentClass> getClassById(@PathVariable("id") Long id) {
         try {
             StudentClass result = classService.getClassById(id);
             return Result.success(result);
@@ -46,8 +46,17 @@ public class ClassController {
     }
 
     @GetMapping("/test/{id}")
-    public Result<String> testWithId(@PathVariable Long id) {
+    public Result<String> testWithId(@PathVariable("id") Long id) {
         return Result.success("Test with ID: " + id);
+    }
+
+    @GetMapping("/debug/{id}")
+    public Result<String> debugWithId(@PathVariable("id") Long id) {
+        try {
+            return Result.success("Debug ID: " + id);
+        } catch (Exception e) {
+            return Result.error("Debug error: " + e.getMessage());
+        }
     }
 
     @GetMapping
