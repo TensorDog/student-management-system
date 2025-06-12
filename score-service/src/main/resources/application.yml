@@ -1,0 +1,75 @@
+spring.config.import: "optional:nacos:"
+
+server:
+  port: 8083
+
+spring:
+  application:
+    name: score-service
+  # 数据源配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/score_db?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    password: Abcd1234
+  # Nacos 配置中心
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        namespace: public
+        group: DEFAULT_GROUP
+        metadata:
+          version: 1.0.0
+          context-path: /api/scores
+      config:
+        server-addr: localhost:8848
+        namespace: public
+        group: DEFAULT_GROUP
+        file-extension: yaml
+        import-check:
+          enabled: false
+
+# MyBatis 配置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.student.common.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    use-generated-keys: true
+    default-fetch-size: 100
+    default-statement-timeout: 30
+
+# 日志配置
+logging:
+  level:
+    com.student.score: DEBUG
+    com.student.common: DEBUG
+    org.springframework.cloud: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+# 监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+# Feign 配置
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 5000
+        read-timeout: 10000
+
+# 自定义配置
+score:
+  service:
+    name: "成绩管理服务"
+    version: "1.0.0"
+    description: "学生成绩管理微服务，提供成绩的增删改查功能"
