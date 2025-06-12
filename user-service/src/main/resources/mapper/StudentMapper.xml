@@ -10,23 +10,25 @@
         <result column="student_number" property="studentNumber"/>
         <result column="name" property="name"/>
         <result column="gender" property="gender"/>
+        <result column="age" property="age"/>
         <result column="class_id" property="classId"/>
         <result column="phone" property="phone"/>
         <result column="email" property="email"/>
-        <result column="address" property="address"/>
-        <result column="birth_date" property="birthDate"/>
         <result column="enrollment_date" property="enrollmentDate"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
     </resultMap>
 
     <!-- Base Column List -->
     <sql id="Base_Column_List">
-        id, student_number, name, gender, class_id, phone, email, address, birth_date, enrollment_date
+        id, student_number, name, gender, age, class_id, phone, email, enrollment_date, created_at, updated_at
     </sql>
 
     <!-- 查询所有学生 -->
     <select id="findAll" resultMap="StudentResultMap">
         SELECT 
-            s.id, s.student_number, s.name, s.gender, s.class_id, s.phone, s.email, s.address, s.birth_date, s.enrollment_date
+            s.id, s.student_number, s.name, s.gender, s.age, s.class_id, s.phone, s.email, s.enrollment_date,
+            s.created_at, s.updated_at
         FROM student s
         ORDER BY s.id DESC
     </select>
@@ -34,7 +36,8 @@
     <!-- 根据ID查询学生 -->
     <select id="findById" resultMap="StudentResultMap">
         SELECT 
-            s.id, s.student_number, s.name, s.gender, s.class_id, s.phone, s.email, s.address, s.birth_date, s.enrollment_date
+            s.id, s.student_number, s.name, s.gender, s.age, s.class_id, s.phone, s.email, s.enrollment_date,
+            s.created_at, s.updated_at
         FROM student s
         WHERE s.id = #{id}
     </select>
@@ -42,7 +45,8 @@
     <!-- 根据学号查询学生 -->
     <select id="findByStudentNumber" resultMap="StudentResultMap">
         SELECT 
-            s.id, s.student_number, s.name, s.gender, s.class_id, s.phone, s.email, s.address, s.birth_date, s.enrollment_date
+            s.id, s.student_number, s.name, s.gender, s.age, s.class_id, s.phone, s.email, s.enrollment_date,
+            s.created_at, s.updated_at
         FROM student s
         WHERE s.student_number = #{studentNumber}
     </select>
@@ -50,7 +54,8 @@
     <!-- 根据班级ID查询学生列表 -->
     <select id="findByClassId" resultMap="StudentResultMap">
         SELECT 
-            s.id, s.student_number, s.name, s.gender, s.class_id, s.phone, s.email, s.address, s.birth_date, s.enrollment_date
+            s.id, s.student_number, s.name, s.gender, s.age, s.class_id, s.phone, s.email, s.enrollment_date,
+            s.created_at, s.updated_at
         FROM student s
         WHERE s.class_id = #{classId}
         ORDER BY s.student_number
@@ -71,9 +76,9 @@
     <!-- 插入新学生 -->
     <insert id="insert" parameterType="com.student.common.entity.Student" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO student (
-            student_number, name, gender, class_id, phone, email, address, birth_date, enrollment_date
+            student_number, name, gender, age, class_id, phone, email, enrollment_date
         ) VALUES (
-            #{studentNumber}, #{name}, #{gender}, #{classId}, #{phone}, #{email}, #{address}, #{birthDate}, #{enrollmentDate}
+            #{studentNumber}, #{name}, #{gender}, #{age}, #{classId}, #{phone}, #{email}, #{enrollmentDate}
         )
     </insert>
 
@@ -83,11 +88,10 @@
             student_number = #{studentNumber},
             name = #{name},
             gender = #{gender},
+            age = #{age},
             class_id = #{classId},
             phone = #{phone},
             email = #{email},
-            address = #{address},
-            birth_date = #{birthDate},
             enrollment_date = #{enrollmentDate}
         WHERE id = #{id}
     </update>
@@ -108,11 +112,9 @@
     <!-- 根据关键词搜索学生 -->
     <select id="searchByKeyword" resultMap="StudentResultMap">
         SELECT 
-            s.id, s.name, s.student_number, s.gender, s.birth_date, 
-            s.phone, s.email, s.address, s.class_id, sc.class_name,
-            s.enrollment_date, s.status
+            s.id, s.student_number, s.name, s.gender, s.age, s.class_id, s.phone, s.email, s.enrollment_date,
+            s.created_at, s.updated_at
         FROM student s
-        LEFT JOIN student_class sc ON s.class_id = sc.id
         WHERE s.name LIKE CONCAT('%', #{keyword}, '%') 
            OR s.student_number LIKE CONCAT('%', #{keyword}, '%')
         ORDER BY s.id DESC

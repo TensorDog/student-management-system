@@ -6,12 +6,20 @@ server:
 spring:
   application:
     name: user-service
-  # 数据源配置
+  # 数据源配置 - 使用H2数据库
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/student_management?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&useSSL=false
-    username: root
-    password: Abcd1234
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:student_management;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MySQL
+    username: sa
+    password: 
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
   # Nacos 配置中心（已注释，避免冲突）
   # cloud:
   #   nacos:
@@ -30,7 +38,7 @@ spring:
 # MyBatis 配置
 mybatis:
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.student.user.entity
+  type-aliases-package: com.student.common.entity
   configuration:
     map-underscore-to-camel-case: true
     use-generated-keys: true
@@ -40,7 +48,7 @@ mybatis:
 # 日志配置
 logging:
   level:
-    com.student.user: DEBUG
+    com.student.userservice: DEBUG
     com.student.common: DEBUG
     org.springframework.cloud: DEBUG
   pattern:

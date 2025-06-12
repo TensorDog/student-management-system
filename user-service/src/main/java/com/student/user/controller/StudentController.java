@@ -44,7 +44,7 @@ public class StudentController {
      * 根据ID获取学生信息
      */
     @GetMapping("/{id}")
-    public Result<Student> getStudentById(@PathVariable @NotNull Long id) {
+    public Result<Student> getStudentById(@PathVariable("id") @NotNull Long id) {
         try {
             Student student = studentService.getStudentById(id);
             if (student == null) {
@@ -61,7 +61,7 @@ public class StudentController {
      * 根据班级ID获取学生列表
      */
     @GetMapping("/class/{classId}")
-    public Result<List<Student>> getStudentsByClassId(@PathVariable @NotNull Long classId) {
+    public Result<List<Student>> getStudentsByClassId(@PathVariable("classId") @NotNull Long classId) {
         try {
             List<Student> students = studentService.getStudentsByClassId(classId);
             return Result.success(students);
@@ -75,7 +75,7 @@ public class StudentController {
      * 根据学号获取学生信息
      */
     @GetMapping("/number/{studentNumber}")
-    public Result<Student> getStudentByNumber(@PathVariable @NotNull String studentNumber) {
+    public Result<Student> getStudentByNumber(@PathVariable("studentNumber") @NotNull String studentNumber) {
         try {
             Student student = studentService.getStudentByNumber(studentNumber);
             if (student == null) {
@@ -106,7 +106,7 @@ public class StudentController {
      * 更新学生信息
      */
     @PutMapping("/{id}")
-    public Result<Student> updateStudent(@PathVariable @NotNull Long id, 
+    public Result<Student> updateStudent(@PathVariable("id") @NotNull Long id, 
                                        @RequestBody @Valid StudentDTO studentDTO) {
         try {
             Student student = studentService.updateStudent(id, studentDTO);
@@ -124,7 +124,7 @@ public class StudentController {
      * 删除学生
      */
     @DeleteMapping("/{id}")
-    public Result<Void> deleteStudent(@PathVariable @NotNull Long id) {
+    public Result<Void> deleteStudent(@PathVariable("id") @NotNull Long id) {
         try {
             boolean deleted = studentService.deleteStudent(id);
             if (!deleted) {
@@ -177,6 +177,14 @@ public class StudentController {
             log.error("获取学生统计信息失败", e);
             return Result.error("获取统计信息失败: " + e.getMessage());
         }
+    }
+    
+    /**
+     * 测试接口
+     */
+    @GetMapping("/test")
+    public Result<String> test() {
+        return Result.success("User service is working!");
     }
     
 } 
