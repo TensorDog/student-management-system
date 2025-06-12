@@ -1,5 +1,5 @@
-/Users/fann/Build Application/Student Information Management System/class-service/src/main/java/com/student/classservice/ClassServiceApplication.java
-/Users/fann/Build Application/Student Information Management System/class-service/src/main/java/com/student/classservice/controller/ClassController.java
-/Users/fann/Build Application/Student Information Management System/class-service/src/main/java/com/student/classservice/mapper/ClassMapper.java
-/Users/fann/Build Application/Student Information Management System/class-service/src/main/java/com/student/classservice/service/ClassService.java
-/Users/fann/Build Application/Student Information Management System/class-service/src/main/java/com/student/classservice/service/impl/ClassServiceImpl.java
+/workspace/class-service/src/main/java/com/student/classservice/ClassServiceApplication.java
+/workspace/class-service/src/main/java/com/student/classservice/controller/ClassController.java
+/workspace/class-service/src/main/java/com/student/classservice/mapper/ClassMapper.java
+/workspace/class-service/src/main/java/com/student/classservice/service/ClassService.java
+/workspace/class-service/src/main/java/com/student/classservice/service/impl/ClassServiceImpl.java
